@@ -49,13 +49,19 @@ class TicTacToeGUI(tk.Canvas):
         try:
             # REMARK: IF WE WANT TO GENERATE EXECUTABLE, WE MUST DO THIS PATHS TO IMGS DIFFERENT!!!
 
-            # Open the image of the body of each player's colors
+            # Open the image of the body of each player's colors and robot
             self.player_1_img = Image.open(os.path.join(current_folder, "imgs", "player_1.png"))
             self.player_2_img = Image.open(os.path.join(current_folder, "imgs", "player_2.png"))
+            self.robot_img = Image.open(os.path.join(current_folder, "imgs", "robot.png"))
+
+            # Correct image dimentions that do not match window size (fix them)
+            self.robot_img.thumbnail((300, 300), Image.ANTIALIAS)
 
             # Create the "PhotoImages" with the opened images before
             self.player_1 = ImageTk.PhotoImage(self.player_1_img)
             self.player_2 = ImageTk.PhotoImage(self.player_2_img)
+            self.robot = ImageTk.PhotoImage(self.robot_img)
+
         except IOError as error:
             print(error)
             root.destroy()
@@ -63,10 +69,18 @@ class TicTacToeGUI(tk.Canvas):
     def create_objects(self):
         # Display my name at the top right
         self.create_text(
-            400,
+            350,
             25,
             text="Santiago Garcia Arango, MLH 2021",
             fill="#FFFF33",
+            font=("TkDefaultFont", 15))
+
+        # Display greetings message at the bottom
+        self.create_text(
+            350,
+            675,
+            text="Thanks for playing this amazing game by san99tiago!",
+            fill="#37FFFF",
             font=("TkDefaultFont", 14))
 
         # We create the rectangle that gives the "boundaries" of Tic Tac Toe
@@ -85,17 +99,17 @@ class TicTacToeGUI(tk.Canvas):
         self.create_rectangle(250, 450, 450, 650, outline="#B8AEAB")
         self.create_rectangle(450, 450, 650, 650, outline="#B8AEAB")
 
-        self.create_image(150, 150, image=self.player_1, tag="player")
-        self.create_image(350, 150, image=self.player_2, tag="player")
-        self.create_image(550, 150, image=self.player_1, tag="player")
+        # self.create_image(150, 150, image=self.player_1, tag="player")
+        # self.create_image(350, 150, image=self.player_2, tag="player")
+        # self.create_image(550, 150, image=self.player_1, tag="player")
 
-        self.create_image(150, 350, image=self.player_2, tag="player")
-        self.create_image(350, 350, image=self.player_1, tag="player")
-        self.create_image(550, 350, image=self.player_2, tag="player")
+        # self.create_image(150, 350, image=self.player_2, tag="player")
+        # self.create_image(350, 350, image=self.player_1, tag="player")
+        # self.create_image(550, 350, image=self.player_2, tag="player")
 
-        self.create_image(150, 550, image=self.player_1, tag="player")
-        self.create_image(350, 550, image=self.player_2, tag="player")
-        self.create_image(550, 550, image=self.player_1, tag="player")
+        # self.create_image(150, 550, image=self.player_1, tag="player")
+        # self.create_image(350, 550, image=self.player_2, tag="player")
+        # self.create_image(550, 550, image=self.player_1, tag="player")
 
     # Method to restart the game
     def on_key_press(self, event):
@@ -162,15 +176,22 @@ class TicTacToeGUI(tk.Canvas):
             30,
             text="Press <space> to restart",
             fill="#FFFF33",
+            justify="center",
             font=("TkDefaultFont", 16))
 
         # Show the text at the end of the game to show score
         self.create_text(
             self.winfo_width() / 2,  # Obtain half of the window-size in width
             self.winfo_height() / 4,  # Obtain 1/4 of the window-size in height
-            text="THANK YOU FOR PLAYING\nTHE BEST\\TIC TAC TOE GAME\n",
+            text="THANK YOU FOR PLAYING\nTHE BEST\nTIC-TAC-TOE GAME\n",
             fill="#FFF",
+            justify="center",
             font=("TkDefaultFont", 20))
+
+        # Show cool robot picture in the <final restart window>
+        image_pos_x = self.winfo_width() / 2
+        image_pos_y = 2 * self.winfo_height() / 3
+        self.create_image(image_pos_x, image_pos_y, image=self.robot, tag="robot")
 
     def reset_game(self):
         self.active_game = True
@@ -185,7 +206,7 @@ class TicTacToeGUI(tk.Canvas):
 if __name__ == "__main__":
     # Root creation and customizing it with title and NOT resizable
     root = tk.Tk()
-    root.title("Tic-Tac-Toe: san99tiago")
+    root.title("TIC-TAC-TOE by: san99tiago")
     root.resizable(False, False)
     # root.iconbitmap(current_folder + "\\imgs\\santa_icon.ico" )
 
