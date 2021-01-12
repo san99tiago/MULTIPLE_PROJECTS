@@ -23,9 +23,10 @@ class TicTacToe:
         # Player's 1 turn
         if (self.current_player == 1):
             self.board[position[0], position[1]] = 1
-            print(self.check_winner())
+            winner_status = self.check_winner()
+            print(winner_status)
             print(self.board)
-            if self.check_winner() > 0:
+            if winner_status > 0:
                 return True
             else:
                 self.current_player = 2
@@ -34,9 +35,10 @@ class TicTacToe:
         # Player's 2 turn
         if (self.current_player == 2):
             self.board[position[0], position[1]] = 2
-            print(self.check_winner())
+            winner_status = self.check_winner()
+            print(winner_status)
             print(self.board)
-            if self.check_winner() > 0:
+            if winner_status > 0:
                 return True
             else:
                 self.current_player = 1
@@ -78,6 +80,17 @@ class TicTacToe:
             # Check secundary diagonal
             if (self.board[0, 2] == self.board[1, 1] and self.board[1, 1] == self.board[2, 0] and self.board[2, 0] == 2):
                 return 2
+
+        # Check if there are NO more possible moves available
+        total_moves = 0
+        for i in range(3):
+            for j in range(3):
+                if self.board[i, j] > 0:
+                    total_moves = total_moves + 1
+
+        # If all moves are done, return 3 (which means that there was a tie)
+        if total_moves == 9:
+            return 3
 
         # If no one has won yet
         return 0
