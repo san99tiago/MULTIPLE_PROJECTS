@@ -13,19 +13,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-def my_linear_congruential_generator(mult=16803, mod=(2**31)-1, seed=12345678909,  size=100):
+def my_linear_congruential_generator(mult=16803, mod=(2**31) - 1, seed=12345678909, size=100):
     """
     My own pseudo-random generator with multiplier and modulus
     """
     U = np.zeros(size)
     x = (seed * mult + 1) % mod
     U[0] = x / mod
-    
+
     for i in range(1, size):
         x = (x * mult + 1) % mod
         U[i] = x / mod
-    
+
     return U
 
 
