@@ -8,6 +8,7 @@ import tic_tac_toe as ttt
 # General imports
 import os
 import tkinter as tk
+from tkinter.messagebox import showinfo
 from PIL import Image, ImageTk
 
 # Some constants for the implementation of the code...
@@ -142,8 +143,12 @@ class TicTacToeGUI(tk.Canvas):
             print("2")
             position_x = 2
 
-        # Apply move if it is valid
-        if (position_x >= 0 and position_y >= 0):
+        # Show warning if player clicks impossible position
+        if self.game.board[position_x, position_y] > 0:
+            showinfo("WARNING", "Error: you clicked an impossible position!")
+
+        # Apply move if it is valid (in location and not reapeated)
+        if (position_x >= 0 and position_y >= 0 and self.game.board[position_x, position_y] == 0):
             self.update_move_in_GUI([position_x, position_y])
             self.game.move([position_x, position_y])
 
@@ -152,7 +157,7 @@ class TicTacToeGUI(tk.Canvas):
             print("\n\nTHERE WAS A TIE, PLAY AGAIN!\n\n")
             self.end_game()
             self.game.restart_board()
-            self.current_player = 1
+            self.game.current_player = 1
             return
 
         # Check for winner
@@ -161,7 +166,7 @@ class TicTacToeGUI(tk.Canvas):
             print("\n\nTHE WINNER IS: ", winner, "!!!!\n\n")
             self.end_game()
             self.game.restart_board()
-            self.current_player = 1
+            self.game.current_player = 1
             return
 
     # Apply specific images for each players move in GUI
