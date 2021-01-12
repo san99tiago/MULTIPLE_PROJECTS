@@ -53,8 +53,6 @@ class TicTacToeGUI(tk.Canvas):
             # THIS IS HOW WE ADD THE IMAGES FOR PRODUCTION (WITH PY-INSTALLER)
             # =================================================================
             bundle_dir = getattr(sys, "_MEIPASS", os.path.abspath(os.path.dirname(__file__)))
-            # print(bundle_dir)
-            path_to_snake = os.path.join(bundle_dir, "imgs", "snake.png")
 
             # Open the image of the body of each player's colors and robot
             self.player_1_img = Image.open(os.path.join(bundle_dir, "imgs", "player_1.png"))
