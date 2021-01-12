@@ -1,0 +1,453 @@
+/* Santiago Garcia Arango */
+
+body {
+    background-color: #264653;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Mulish', sans-serif;
+    margin: 0px;  /* Remove default margin */
+}
+
+/* HEADER */
+
+.header {
+    align-items: center;  /* Center header elements in a vertical way */
+    background-color: #264653;
+    display: flex;  /* Add flexbox property */
+    height: 80px;
+    justify-content: space-between;  /* Middle space for header components */
+    width: 100%;
+}
+
+.header__img {
+    height: 100%;
+    margin-top: 8px;
+    margin-left: 8px;
+    width: 35%;
+}
+
+@media only screen and (max-width: 600px) {
+    .header__img {
+        width: 50%;
+    }
+}
+
+.header__menu {
+    margin-right: 22px;
+}
+
+.header__menu ul {
+    display: none;
+    list-style: none;  /* Avoid the little balls of lists*/
+    margin: 0px 0px 0px -5px;  /* Add negative left margin for extra space */
+    text-align: right;
+    padding: 0px;  /* Remove default left padding */
+    position: absolute;  /* To get better control of the menu */
+    width: 100px;
+}
+
+.header__menu:hover ul, ul:hover{
+    display: block;  /* Show items of menu-list when we hover on them */
+}
+
+.header__menu li {
+    margin: 5px 0px;
+}
+
+.header__menu li a {
+    color: white;
+    text-decoration: none;  /* Remove underline on all links */
+}
+
+.header__menu li a:hover {
+    color:yellow;
+    text-decoration: underline;  /* Add underline when hovering on item */
+}
+
+.header__menu--profile {
+    display: flex;  /* Important for the flexbox (to allow correct display) */
+    margin-right: 15px;  /* Avoid part of the menu overlapping on right side*/
+}
+
+.header__menu--profile p {
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;  /* Move "Profile" text a little to the right of img */
+}
+
+/* SEARCH */
+
+.search {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    justify-content: center;
+}
+
+.search__title {
+    color: white;
+    font-size: 25px;
+}
+
+.input {
+    background-color: rgba(255, 255, 255, 0.1);  /* Apply almost transparent color */
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Mulish', sans-serif;
+    font-size: 16px;
+    height: 40px;
+    outline: none;
+    width: 60%;
+    padding: 0px 10px;
+}
+::placeholder {
+    color: white;  /* Default color of letters in placeholder white */
+}
+
+/* CATEGORIES */
+
+.categories__title {
+    color: white;
+    font-size: medium;
+    padding-left: 30px;
+    position: absolute;
+    width: 70%;
+    padding: none;
+}
+
+
+/* CAROUSEL */
+
+.carousel {
+    display: flex;  /* TESTING FLEX PROPERTY *could change* */
+    overflow: hidden;
+    overflow-x: scroll;
+    scrollbar-color: black;
+    padding: 30px 0px 30px 30px;
+    position: relative;  /* Inner items will be related to this class */
+    width: 90%;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide_scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide_scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.carousel__container {
+    padding-bottom: 10px;  /* Extra space to fix image undesired "cut" */
+    margin: 60px 0px;  /* Extra space to allow correct "hovering" animation */
+    white-space: nowrap;  /* Allows components to don't wrap down */
+}
+
+.carousel-item {
+    background-color: lightblue;
+    border-radius: 20px;
+    cursor: pointer;  /* Change default cursor to "little hand" pointer */
+    display: inline-block;  /* Way to show elements to the rigth (not down) */
+    height: 250px;
+    overflow: hidden;  /* Allows to hide images' extra space out of borders */
+    position: relative;  /* For relative parent */
+    transition: 450ms all;  /* Time to achieve transition */
+    transform-origin: center left;  /* Details for transition (center-left)*/
+    margin-right: 10px;
+    width: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+    .carousel-item {
+        height: 150px;
+        width: 100px;
+    }
+}
+
+/* Special class selector with the "~" item to apply to all sub-items */
+.carousel-item:hover ~ .carousel-item{
+    transform: translate3d(100px, 0, 0);  /* Elements move to the right */
+}
+
+@media only screen and (max-width: 600px) {
+    .carousel-item:hover ~ .carousel-item{
+        transform: translate3d(50px, 0, 0);  /* Elements move to the right */
+    }
+}
+
+.carousel__container:hover .carousel-item{
+    opacity: 0.3;  /* Apply opacity reduction to all carousel items */
+}
+
+.carousel__container:hover .carousel-item:hover{
+    transform: scale(1.5);  /* Increase image size in 50% */
+    opacity: 1;  /* Avoid opacity reduction to specific selected item */
+}
+
+.carousel-item__img {
+    height: 250px;
+    object-fit: cover;  /* Don't transform image proportions */
+    width: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+    .carousel-item__img {
+        height: 150px;
+        width: 100px;
+    }
+}
+
+.carousel-item__details {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+    bottom: 0;  /* For general absolute position */
+    display: flex;  /* For better positioninig of details */
+    flex-direction: column;  /* For better positioning of details */
+    font-size: 10px;
+    justify-content: flex-end;  /* For better positioning of details */
+    left: 0;  /* For general absolute position */
+    opacity: 1;
+    padding: 10px;
+    position: absolute;
+    right: 0;  /* For general absolute position */
+    top: 0;  /* For general absolute position */
+    transition: 450ms opacity;
+}
+
+.carousel-item__details img {
+    height: 25px;
+    width: 25px;
+}
+
+.carousel-item__details--title {
+    color: white;
+    font-weight: bold;
+}
+
+.carousel-item__details--subtitle {
+    color: white;
+    font-weight: lighter;
+}
+
+.carousel-item__details:hover {
+    opacity: 1;
+}
+
+
+/* LOGIN */
+
+.login {
+    align-items: center;
+    background: linear-gradient(#264653,  hsl(165, 43%, 44%));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 160px);  /* Avoid excesive shrinking */
+    padding: 0px;
+}
+
+.login__container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: calc(60vh - 0px);
+    padding: 30px 15px;
+    width: 300px;
+}
+
+.login__container--form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login__container--form input {
+    background-color: transparent;
+    border-bottom: 2px solid white;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+    border-radius: 0px;
+    margin-bottom: 15px;
+    outline: none;
+    width: 90%;
+}
+
+.login__container--form button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    border: 0px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    font-size: medium;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 10px 0px;
+    outline: none;
+    padding: 10px 0px;
+}
+
+.login__container--form label{
+    font-size: smaller;
+}
+
+.login__container--remember-me {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.login__container--remember-me label {
+    border-radius: 0px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    font-size: smaller;
+}
+
+.login__container--remember-me a {
+    color: white;
+    font-size: smaller;
+    text-decoration: none;  /* Avoid underline property of links */
+}
+
+.login__container--remember-me a:hover {
+    text-decoration: underline;  /* Only apply underline in this case*/
+}
+
+/* Apply these properties for all "divs" inside the class name */
+.login__container--social-media > div {
+    align-items: center;
+    display: flex;
+    font-size: smaller;
+    /* flex-direction: column; */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.login__container--social-media > div > img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.login__container--register {
+    font-size: smaller;
+}
+
+.login__container--register a {
+    color: white;
+    font-size: small;
+    font-weight: bold;
+    text-decoration: none;  /* Avoid underline property of links */
+}
+
+.login__container--register a:hover {
+    text-decoration: underline;  /* Apply underline property */
+}
+
+/* FOOTER */
+
+.footer {
+    background-color: hsl(165, 43%, 44%);
+    align-items: center;
+    display: flex;
+    height: 80px;
+    width: 100%;
+    margin-top: auto;  /* Trick for sending the footer to the bottom */
+}
+
+@media only screen and (max-width: 600px) {
+    .footer {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.footer a {
+    color: black;
+    cursor: pointer;
+    font-size: medium;
+    padding-left: 30px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;  /* Apply underline property */
+}
+
+
+/* REGISTER */
+
+.register {
+    align-items: center;
+    background: linear-gradient(#264653, hsl(165, 43%, 44%));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 160px);  /* Avoid excesive shrinking */
+    padding: 0px;
+}
+
+.register__container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: calc(60vh - 0px);
+    padding: 30px 15px;
+    width: 300px;
+}
+
+.register__container--form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__container--form input {
+    background-color: transparent;
+    border-bottom: 2px solid white;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+    border-radius: 0px;
+    margin-bottom: 15px;
+    outline: none;
+    width: 90%;
+}
+
+.register__container--form button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    border: 0px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    font-size: medium;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 10px 0px;
+    outline: none;
+    padding: 10px 0px;
+}
+
+.register__container--login a{
+    color: white;
+    font-size: small;
+    font-weight: bold;
+    text-decoration: none;  /* Avoid underline property of links */
+}
+
+.register__container--login a:hover {
+    text-decoration: underline;  /* Apply underline property */
+}
