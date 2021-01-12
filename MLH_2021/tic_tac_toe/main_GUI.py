@@ -99,29 +99,20 @@ class TicTacToeGUI(tk.Canvas):
         self.create_rectangle(250, 450, 450, 650, outline="#B8AEAB")
         self.create_rectangle(450, 450, 650, 650, outline="#B8AEAB")
 
-        # self.create_image(150, 150, image=self.player_1, tag="player")
-        # self.create_image(350, 150, image=self.player_2, tag="player")
-        # self.create_image(550, 150, image=self.player_1, tag="player")
-
-        # self.create_image(150, 350, image=self.player_2, tag="player")
-        # self.create_image(350, 350, image=self.player_1, tag="player")
-        # self.create_image(550, 350, image=self.player_2, tag="player")
-
-        # self.create_image(150, 550, image=self.player_1, tag="player")
-        # self.create_image(350, 550, image=self.player_2, tag="player")
-        # self.create_image(550, 550, image=self.player_1, tag="player")
-
-    # Method to restart the game
+    # Pressed keys event handler (to reset the game at the end)
     def on_key_press(self, event):
-        # The way to restart the game
         if (event.keysym == "space" and not self.active_game):
             self.reset_game()
 
-    # Mouse clicks
+        if (event.keysym == "Escape" or event.keysym == "q"):
+            root.destroy()
+
+    # Mouse clicks events handler (to know the moves and positions of game)
     def mouse_click(self, event):
-        print("Mouse position: (%s %s)" % (event.x, event.y))
-        self.move_based_on_click(event)
-        return
+        # print("Mouse position: (%s %s)" % (event.x, event.y))
+        if self.active_game is True:
+            self.move_based_on_click(event)
+            return
 
     # Understand desired position for each click
     def move_based_on_click(self, event):
@@ -153,7 +144,16 @@ class TicTacToeGUI(tk.Canvas):
 
         # Apply move if it is valid
         if (position_x >= 0 and position_y >= 0):
+            self.update_move_in_GUI([position_x, position_y])
             self.game.move([position_x, position_y])
+
+        # Check for tie
+        if self.game.check_winner() == 3:
+            print("\n\nTHERE WAS A TIE, PLAY AGAIN!\n\n")
+            self.end_game()
+            self.game.restart_board()
+            self.current_player = 1
+            return
 
         # Check for winner
         if self.game.check_winner() > 0:
@@ -162,8 +162,37 @@ class TicTacToeGUI(tk.Canvas):
             self.end_game()
             self.game.restart_board()
             self.current_player = 1
+            return
 
-    # Method for when a user wins
+    # Apply specific images for each players move in GUI
+    def update_move_in_GUI(self, position):
+        # Check for current player's turn (1 or 2)
+        if self.game.current_player == 1:
+            current_image = self.player_1
+        else:
+            current_image = self.player_2
+
+        # Apply image for specific move's position
+        if position == [0, 0]:
+            self.create_image(150, 150, image=current_image, tag="player")
+        elif position == [0, 1]:
+            self.create_image(350, 150, image=current_image, tag="player")
+        elif position == [0, 2]:
+            self.create_image(550, 150, image=current_image, tag="player")
+        elif position == [1, 0]:
+            self.create_image(150, 350, image=current_image, tag="player")
+        elif position == [1, 1]:
+            self.create_image(350, 350, image=current_image, tag="player")
+        elif position == [1, 2]:
+            self.create_image(550, 350, image=current_image, tag="player")
+        elif position == [2, 0]:
+            self.create_image(150, 550, image=current_image, tag="player")
+        elif position == [2, 1]:
+            self.create_image(350, 550, image=current_image, tag="player")
+        elif position == [2, 2]:
+            self.create_image(550, 550, image=current_image, tag="player")
+
+    # Method for the game finishes (someone wins or there is a tie)
     def end_game(self):
         self.active_game = False
 
@@ -187,6 +216,32 @@ class TicTacToeGUI(tk.Canvas):
             fill="#FFF",
             justify="center",
             font=("TkDefaultFont", 20))
+
+        # Show final text for game results based on winner or tie
+        if self.game.check_winner() == 1:
+            self.create_text(
+                self.winfo_width() / 2,  # Obtain half of the window-size in width
+                2 * self.winfo_height() / 5,  # Obtain 2/5 of the window-size in height
+                text="WINNER IS PLAYER 1",
+                fill="yellow",
+                justify="center",
+                font=("TkDefaultFont", 28))
+        elif self.game.check_winner() == 2:
+            self.create_text(
+                self.winfo_width() / 2,  # Obtain half of the window-size in width
+                2 * self.winfo_height() / 5,  # Obtain 2/5 of the window-size in height
+                text="WINNER IS PLAYER 2",
+                fill="#FA3853",
+                justify="center",
+                font=("TkDefaultFont", 28))
+        else:
+            self.create_text(
+                self.winfo_width() / 2,  # Obtain half of the window-size in width
+                2 * self.winfo_height() / 5,  # Obtain 2/5 of the window-size in height
+                text="IT WAS A TIE...\nYOU SHOULD REMATCH!",
+                fill="#8DFA38",
+                justify="center",
+                font=("TkDefaultFont", 28))
 
         # Show cool robot picture in the <final restart window>
         image_pos_x = self.winfo_width() / 2
