@@ -6,3 +6,6 @@ __pycache__
 
 # Ignore Python virtual environrment
 venv
+
+# Ignore SendGrid API virtual environment
+sendgrid.env
