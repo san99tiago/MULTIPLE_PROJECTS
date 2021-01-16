@@ -1,0 +1,21 @@
+------------- MAGENTA MELODY_RNN MODEL -----------------
+This is an amazing project that creates a model that applies language modeling
+to melody generation using an LSTM.
+
+You can find the source code at:
+https://github.com/magenta/magenta/tree/master/magenta/models/melody_rnn
+
+And the video tutorial for this specific project approach is:
+https://www.youtube.com/watch?v=2f20d0LJSuk
+
+Example:
+    BUNDLE_PATH=<absolute path of .mag file>
+    CONFIG=<one of 'basic_rnn', 'lookback_rnn', or 'attention_rnn', matching the bundle>
+
+    melody_rnn_generate \
+    --config=${CONFIG} \
+    --bundle_file=${BUNDLE_PATH} \
+    --output_dir=/tmp/melody_rnn/generated \
+    --num_outputs=10 \
+    --num_steps=128 \
+    --primer_melody="[60]"
